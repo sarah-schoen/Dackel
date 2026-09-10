@@ -1,0 +1,16 @@
+{
+  "visitFrequencyMinutes": 5,
+  "waterReminderMinutes": 45,
+  "checkinsEnabled": true,
+  "waterEnabled": true,
+  "soundEnabled": false,
+  "animationSpeed": 1.0,
+  "petSize": "medium",
+  "aiChat": false,
+  "launchMode": "companion",
+  "quietHours": {
+    "enabled": false,
+    "start": "22:00",
+    "end": "07:00"
+  }
+}
