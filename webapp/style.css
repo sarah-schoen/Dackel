@@ -1,0 +1,459 @@
+:root {
+  --brown: #a65a2a;
+  --brown-dark: #31353a;
+  --cream: #fffaf5;
+  --glass: rgba(255,255,255,.94);
+  --shadow: 0 18px 55px rgba(35, 28, 24, .18);
+  --radius: 24px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  background: transparent;
+  color: var(--brown-dark);
+}
+
+body {
+  overflow: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  position: relative;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,.85), transparent 35%),
+    linear-gradient(145deg, #f8f1eb, #eee7e1);
+}
+
+.pet-stage {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42vh;
+  min-height: 250px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 18px;
+}
+
+.pet-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 3;
+  transform-origin: 50% 90%;
+  animation: petIdle 2.7s ease-in-out infinite;
+}
+
+.pet-button.walking {
+  animation: petWalk .42s ease-in-out infinite alternate;
+}
+
+.pet-button.happy {
+  animation: petHappy .5s ease-in-out 2;
+}
+
+#pet {
+  width: min(58vw, 420px);
+  max-height: 35vh;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 10px 9px rgba(40, 30, 25, .13));
+}
+
+.ground-shadow {
+  position: absolute;
+  width: min(44vw, 280px);
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(45, 36, 31, .14);
+  bottom: 14px;
+  transform: scaleX(1);
+  animation: shadowBreath 2.7s ease-in-out infinite;
+}
+
+.bubble {
+  position: absolute;
+  z-index: 5;
+  left: calc(50% + 70px);
+  bottom: 52%;
+  max-width: min(72vw, 360px);
+  padding: 15px 18px;
+  border-radius: 19px;
+  background: #fffaf5;
+  border: 1px solid #e6d9cf;
+  box-shadow: var(--shadow);
+  font-size: 18px;
+  line-height: 1.3;
+  animation: bubbleIn .22s ease-out;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -10px;
+  border: 10px solid transparent;
+  border-top-color: var(--glass);
+  border-bottom: 0;
+}
+
+.hidden { display: none !important; }
+
+.full-panel {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  max-width: 640px;
+  margin: auto;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.92);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+  z-index: 10;
+}
+
+body.widget .full-panel {
+  display: none;
+}
+
+body.widget .app {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #fffaf5, #f0e7df);
+}
+
+body.widget .pet-stage {
+  height: 100vh;
+  min-height: 0;
+  padding-bottom: 4px;
+}
+
+body.widget #pet {
+  width: 88%;
+  max-height: 88%;
+}
+
+body.widget .bubble {
+  left: auto;
+  right: 5%;
+  bottom: 55%;
+  max-width: 52%;
+  font-size: 13px;
+  padding: 9px 11px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: .12em;
+  opacity: .58;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 3px 0 0;
+  font-size: 28px;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1e9e3;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.status-row {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  opacity: .72;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #6fa96f;
+}
+
+.messages {
+  margin-top: 14px;
+  background: rgba(255,255,255,.98);
+  border: 1px solid #eadfd7;
+  border-radius: 18px;
+  padding: 10px;
+  max-height: 210px;
+  overflow: auto;
+  padding-right: 3px;
+}
+
+.message {
+  margin: 7px 0;
+  padding: 10px 13px;
+  border-radius: 16px;
+  max-width: 88%;
+  line-height: 1.35;
+  font-size: 14px;
+}
+
+.message.pet {
+  background: #f2e7de;
+  border: 1px solid #e3d4c8;
+  margin-right: auto;
+}
+
+.message.user {
+  background: var(--brown);
+  border: 1px solid var(--brown);
+  color: white;
+  margin-left: auto;
+}
+
+.chat-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #e4d8cf;
+  background: #fff;
+  border-radius: 14px;
+  padding: 11px 12px;
+  outline: none;
+  font-size: 14px;
+}
+
+.chat-form button,
+.quick-actions button {
+  border: 0;
+  border-radius: 13px;
+  background: var(--brown);
+  color: white;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.quick-actions button {
+  background: #f0e5dc;
+  color: var(--brown-dark);
+  font-size: 13px;
+}
+
+.settings {
+  margin-top: 14px;
+  font-size: 13px;
+}
+
+.settings summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.settings label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.settings select {
+  border: 1px solid #dfd2c8;
+  border-radius: 9px;
+  padding: 4px 7px;
+}
+
+.toggle {
+  justify-content: flex-start !important;
+}
+
+@keyframes petIdle {
+  0%, 100% { transform: translateY(0) rotate(0deg) scaleY(1); }
+  50% { transform: translateY(-5px) rotate(.3deg) scaleY(1.012); }
+}
+
+@keyframes petWalk {
+  from { transform: translateY(0) rotate(-1deg) scaleY(.985); }
+  to { transform: translateY(-7px) rotate(1deg) scaleY(1.015); }
+}
+
+@keyframes petHappy {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-14px) rotate(-2deg) scale(1.025); }
+}
+
+@keyframes shadowBreath {
+  0%, 100% { transform: scaleX(1); opacity: .14; }
+  50% { transform: scaleX(.92); opacity: .10; }
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* Messenger chat */
+.chat-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 9px 11px;
+  border-radius: 16px;
+  background: #fbf7f3;
+  border: 1px solid #eadfd7;
+}
+.chat-avatar-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ead9ca;
+  overflow: hidden;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: end center;
+}
+.chat-avatar {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  transform: translateY(2px);
+}
+.chat-subtitle {
+  font-size: 11px;
+  opacity: .55;
+  margin-top: 2px;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  margin: 5px 0;
+}
+.message-row.pet-row { justify-content: flex-start; }
+.message-row.user-row { justify-content: flex-end; }
+.message-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #ead9ca;
+  flex: 0 0 auto;
+}
+.message {
+  margin: 0;
+  padding: 9px 12px;
+  border-radius: 17px;
+  max-width: 80%;
+  line-height: 1.38;
+  font-size: 14px;
+  box-shadow: 0 1px 1px rgba(50,40,30,.04);
+}
+.message.pet {
+  background: #f1e4da;
+  border: 1px solid #e1d1c4;
+  border-bottom-left-radius: 6px;
+  color: #31353a;
+}
+.message.user {
+  background: #a65a2a;
+  border: 1px solid #a65a2a;
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+.message-time {
+  font-size: 9px;
+  opacity: .42;
+  margin: 0 5px;
+  align-self: flex-end;
+  white-space: nowrap;
+}
+.typing {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 31px;
+  margin: 5px 0 1px;
+}
+.typing-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #ead9ca;
+}
+.typing-bubble {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 15px;
+  border-bottom-left-radius: 6px;
+  background: #f1e4da;
+  border: 1px solid #e1d1c4;
+}
+.typing-bubble span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #9b806d;
+  animation: typingDot 1.15s ease-in-out infinite;
+}
+.typing-bubble span:nth-child(2) { animation-delay: .15s; }
+.typing-bubble span:nth-child(3) { animation-delay: .30s; }
+.typing-label {
+  font-size: 10px;
+  opacity: .5;
+  font-style: italic;
+}
+.empty-chat {
+  text-align: center;
+  font-size: 12px;
+  opacity: .5;
+  padding: 18px 8px;
+}
+.chat-form button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
